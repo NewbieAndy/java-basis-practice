@@ -3,10 +3,6 @@ package com.newbieandy.trywithresource;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
-import java.util.Date;
-import java.util.Map;
-import java.util.Properties;
 
 /**
  * Created by mchao on 2016/10/12.
@@ -44,22 +40,24 @@ public class Demo1 {
         path = path + "\\src\\main\\resources\\trywithresource\\test.txt";
         tryCatchFinallyTest(path);
         tryWithResourceTest(path);
+        newTryWithResourceTest();
     }
 
     /**
      * 远古方式读取指定文件第一行文本
+     *
      * @param path 文件路径
      */
-    private static void tryCatchFinallyTest(String path){
+    private static void tryCatchFinallyTest(String path) {
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader(new FileReader(path));
-            System.out.println("原始方式调用:"+bufferedReader.readLine());
-        } catch (Exception e){
+            System.out.println("原始方式调用:" + bufferedReader.readLine());
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             //手动关闭..
-            if (null != bufferedReader){
+            if (null != bufferedReader) {
                 try {
                     bufferedReader.close();
                 } catch (IOException e) {
@@ -71,13 +69,51 @@ public class Demo1 {
 
     /**
      * try-with-resource方式调用
+     *
      * @param path 文件路径
      */
-    private static void tryWithResourceTest(String path){
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(path))){
-            System.out.println("新方式调用:"+bufferedReader.readLine());
-        } catch (Exception e){
+    private static void tryWithResourceTest(String path) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
+            System.out.println("新方式调用:" + bufferedReader.readLine());
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 自定义,资源类测试
+     */
+    private static void newTryWithResourceTest() {
+        try (ResourceDemo1 resourceDemo1 = new ResourceDemo1();
+             ResourceDemo2 resourceDemo2 = new ResourceDemo2()) {
+            resourceDemo1.resourceDemo1Test();
+            resourceDemo2.resourceDemo2Test();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class ResourceDemo1 implements AutoCloseable {
+
+    public void resourceDemo1Test() {
+        System.out.println("ResourceDemo1 running....");
+    }
+
+    @Override
+    public void close() throws Exception {
+        System.out.println("ResourceDemo1 closed.....");
+    }
+}
+
+class ResourceDemo2 implements AutoCloseable {
+
+    public void resourceDemo2Test() {
+        System.out.println("ResourceDemo2 running...");
+    }
+
+    @Override
+    public void close() throws Exception {
+        System.out.println("ResourceDemo2 closed....");
     }
 }
