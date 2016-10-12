@@ -1,4 +1,4 @@
-package com.newbieandy.trywithresource;
+package com.newbieandy.java7.trywithresource;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
