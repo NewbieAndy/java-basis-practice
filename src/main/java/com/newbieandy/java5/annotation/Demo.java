@@ -2,8 +2,6 @@ package com.newbieandy.java5.annotation;
 
 import com.newbieandy.java5.annotation.myannotation.CarAnnotationHandler;
 
-import java.math.BigDecimal;
-
 /**
  * Created by mchao on 2016/10/12.
  */
