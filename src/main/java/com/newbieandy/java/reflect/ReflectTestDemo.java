@@ -1,5 +1,6 @@
 package com.newbieandy.java.reflect;
 
+import com.newbieandy.java.reflect.bean.MiddleStudent;
 import com.newbieandy.java.reflect.bean.Person;
 import com.newbieandy.java.reflect.bean.Student;
 
@@ -9,8 +10,15 @@ import java.lang.reflect.Field;
  * Created by mchao on 2016/10/27.
  */
 public class ReflectTestDemo {
-    public static void main(String[] args) {
-        test1();
+    public static void main(String[] args) throws IllegalAccessException {
+        MiddleStudent person = new MiddleStudent();
+        person.setName("andy");
+        person.setAge(22);
+        person.setGender(1);
+        person.setGrade(4);
+        person.setClasses(2);
+        person.setSubject("wen");
+        test2(person);
     }
 
     private static void test1() {
@@ -63,4 +71,32 @@ public class ReflectTestDemo {
 
 
     }
+
+    /**
+     * 获取除了serID以及Obj所有属性的值
+     */
+    private static <T> void test2(T t) throws IllegalAccessException {
+        //获取当前类
+        Class<?> clazz = t.getClass();
+        while (!Object.class.equals(clazz)) {
+            getFields(clazz, t);
+            clazz = clazz.getSuperclass();
+        }
+    }
+
+    private static void getFields(Class clazz, Object obj) throws IllegalAccessException {
+        //获取当前类的属性
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            if (field.getName().equals("serialVersionUID")) {
+                continue;
+            }
+            if (!field.isAccessible()) {
+                field.setAccessible(true);
+            }
+            System.out.println(field.getName() + "::" + field.get(obj).toString());
+            field.setAccessible(false);
+        }
+    }
+
 }
