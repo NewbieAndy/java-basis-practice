@@ -2,7 +2,6 @@ package com.newbieandy.java5.list;
 
 import com.newbieandy.java5.list.bean.User;
 
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,8 @@ public class ListTest {
         System.out.println(list);
 
     }
-    private static List<User> getList1(){
+
+    private static List<User> getList1() {
         List<User> list = new ArrayList<>();
         User user = new User();
         user.setAge(1);
@@ -30,7 +30,7 @@ public class ListTest {
         return list;
     }
 
-    private static List<User> getList2(){
+    private static List<User> getList2() {
         List<User> list = new ArrayList<>();
         User user = new User();
         user.setAge(1);
