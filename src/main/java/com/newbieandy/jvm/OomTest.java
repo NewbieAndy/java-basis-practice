@@ -8,13 +8,14 @@ import java.util.List;
  * 2018/4/12.
  */
 public class OomTest {
-    public static void main(String[] args) {
 
+
+    public static void main(String[] args) {
         List<OOMBean> list = new ArrayList<>();
-        while (true) {
-            System.out.println("1");
-            list.add(new OOMBean());
-        }
+        System.out.println();
+    }
+    public static String getString(){
+        return "";
     }
 
     static class OOMBean {

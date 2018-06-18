@@ -1,4 +1,4 @@
-package com.newbieandy.java.nio;
+package com.newbieandy.java.io.nio;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -5,8 +5,7 @@ package com.newbieandy.java8.lambda;
  */
 public class BasisDemo {
     public static void main(String[] args) {
+
     }
 
-    private static void test() {
-    }
 }
