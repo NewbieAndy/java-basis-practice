@@ -8,8 +8,6 @@ import java.math.RoundingMode;
  */
 public class BigDecimalTest {
     public static void main(String[] args) {
-//        System.out.println(divide(10, 3));
-//        System.out.println(divide(20, 3));
     }
 
     /**
