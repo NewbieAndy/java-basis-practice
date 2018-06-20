@@ -1,72 +1,48 @@
 package com.newbieandy.java8.stream;
 
-import com.newbieandy.java8.bean.Person;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * 流中间操作测试
  */
 public class StreamIntermediateTest {
     public static void main(String[] args) {
-        mapTest();
+        List<User> users = getTestData();
+        System.out.println(users);
+        //获取性别为1的
+        List<User> users1 = users.stream().filter(user -> user.getGender() == 1).collect(Collectors.toList());
+        System.out.println("gender=1:" + users1);
+        //转成name序列
+        List<String> nameList = users.stream().map(User::getName).collect(Collectors.toList());
+        System.out.println("nameList:" + nameList);
+        //根据age排序
+        List<User> sorted = users.stream().sorted(Comparator.comparingInt(User::getAge)).collect(Collectors.toList());
+        System.out.println("sorted:" + sorted);
+        //转成id-userMap
+        Map<Integer, User> collect = users.stream().collect(Collectors.toMap(User::getId, o -> o));
+        System.out.println("map:" + collect);
+        Stream.e
     }
 
-    private static void mapTest() {
-        List<String> strList = Arrays.asList("a","b","c","d","e","f","g");
-        List<String> newStrList = strList.stream().map(String::toUpperCase).collect(Collectors.toList());
-        System.out.println(strList);
-        System.out.println(newStrList);
-        List<Person> personList = new ArrayList<>();
-        IntStream.rangeClosed(1,10).forEach(age->{
-            personList.add(new Person("andy"+age,age));
-        });
-        System.out.println(personList);
-        List<String> list = personList.stream().map(Person::getName).collect(Collectors.toList());
-        System.out.println(list);
-    }
 
-    private static void Test1() {
-
-    }
-
-    private static void Test2() {
-
-    }
-
-    private static void Test3() {
-
-    }
-
-    private static void Test4() {
-
-    }
-
-    private static void Test5() {
-
-    }
-
-    private static void Test6() {
-
-    }
-
-    private static void Test7() {
-
-    }
-
-    private static void Test8() {
-
-    }
-
-    private static void Test9() {
-
-    }
-
-    private static void Test10() {
-
+    /**
+     * 获取测试数据
+     *
+     * @return
+     */
+    private static List<User> getTestData() {
+        List<User> list = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            User user = new User();
+            user.setId(i + 1);
+            user.setAge(random.nextInt(100));
+            user.setName("张三" + i + 1);
+            user.setGender(user.getAge() % 2 == 0 ? 1 : 0);
+            list.add(user);
+        }
+        return list;
     }
 }

@@ -5,7 +5,10 @@ package com.newbieandy.java8.lambda;
  */
 public class BasisDemo {
     public static void main(String[] args) {
-
+        int i = get();
     }
 
+    private static int get() {
+        return 1;
+    }
 }
