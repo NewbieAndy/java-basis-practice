@@ -2,7 +2,6 @@ package com.newbieandy.java8.stream;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 流中间操作测试
@@ -23,7 +22,6 @@ public class StreamIntermediateTest {
         //转成id-userMap
         Map<Integer, User> collect = users.stream().collect(Collectors.toMap(User::getId, o -> o));
         System.out.println("map:" + collect);
-        Stream.e
     }
 
 
