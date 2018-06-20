@@ -2,6 +2,7 @@ package com.newbieandy.java8.stream;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 流中间操作测试
@@ -11,17 +12,23 @@ public class StreamIntermediateTest {
         List<User> users = getTestData();
         System.out.println(users);
         //获取性别为1的
-        List<User> users1 = users.stream().filter(user -> user.getGender() == 1).collect(Collectors.toList());
-        System.out.println("gender=1:" + users1);
+        Stream<User> stream = users.stream().filter(user -> user.getGender() == 1);
+        Stream<User> distinct = stream.distinct();
+        Stream<String> stringStream = users.stream().map(User::getName);
         //转成name序列
         List<String> nameList = users.stream().map(User::getName).collect(Collectors.toList());
         System.out.println("nameList:" + nameList);
+        Stream<User> userStream = users.stream().sorted(Comparator.comparingInt(User::getAge));
+        Stream<User> limit = userStream.limit(2);
+        Stream<User> skip = userStream.skip(2);
         //根据age排序
         List<User> sorted = users.stream().sorted(Comparator.comparingInt(User::getAge)).collect(Collectors.toList());
         System.out.println("sorted:" + sorted);
         //转成id-userMap
         Map<Integer, User> collect = users.stream().collect(Collectors.toMap(User::getId, o -> o));
         System.out.println("map:" + collect);
+        System.out.println("===========stream 的创建=======");
+
     }
 
 
