@@ -10,6 +10,46 @@ import java.util.stream.Stream;
  */
 public class StreamIntermediateTest {
     public static void main(String[] args) {
+//        reduceTest();
+//        IntFunction f = (x) -> x + "";
+//        Object apply = f.apply(9);
+//        System.out.println(apply);
+        toArrayTest();
+    }
+
+    private static void toCollectTest() {
+        List<User> users = getTestData();
+        Stream<User> stream = users.stream();
+        //转成列表
+        List<User> collect = stream.collect(Collectors.toList());
+        //转成map->key:id  value:obj
+        Map<Integer, User> map = stream.collect(Collectors.toMap(User::getId, o -> o));
+
+
+    }
+
+    private static void toArrayTest() {
+        //转成int数组
+        Stream<Integer> intStream = Arrays.asList(1, 2, 43, 5).stream();
+        Integer[] integers = intStream.toArray(Integer[]::new);
+        System.out.println(integers.toString());
+    }
+
+    private static void reduceTest() {
+        List<User> users = getTestData();
+        Stream<User> stream = users.stream();
+        //reduce-->获取年龄最大的用户
+        Optional<User> user = stream.reduce((u, item) -> u.getAge() > item.getAge() ? u : item);
+        if (user.isPresent()) System.out.println(user.get());
+
+        //reduce-->获取集合与基础值的和
+        Stream<Integer> intStream = Arrays.asList(1, 2, 43, 5).stream();
+        Integer reduce = intStream.reduce(2, (i, item) -> i + item);
+        System.out.println(reduce);
+
+    }
+
+    private static void test() {
         List<User> users = getTestData();
         System.out.println(users);
         //获取性别为1的
