@@ -8,26 +8,44 @@ import java.io.*;
  * outputstream,writer--从内存向外写
  */
 public class BIOTest {
+    private static final String BASE_PASH = System.getProperty("user.dir") + File.separator + "file";
+
     public static void main(String[] args) throws IOException {
-        fileCopyTest();
+//        copyTest1();
+        copyTest2();
     }
 
     /**
-     * 文件复制测试
+     * 从源文件逐行读取,写入到目标文件
      */
-    private static void fileCopyTest() throws IOException {
-        String sourceFilePath = "/Users/andy/IdeaProjects/java-basis-practice/src/main/resources/iotest/txts/subFile1.txt";
-        String targetFilePath="/Users/andy/IdeaProjects/java-basis-practice/src/main/resources/iotest/txts/subFile1_copy.txt";
-
-        FileInputStream fileInputStream = new FileInputStream(new File(sourceFilePath));
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(targetFilePath));
-        //设置缓冲区
-        byte [] buffer = new byte[1024];
-        while (-1 !=fileInputStream.read(buffer)){
-            fileOutputStream.write(buffer);
+    private static void copyTest1() throws IOException {
+        File sourceFile = new File(BASE_PASH + File.separator + "strfile_source.txt");
+        File targetFile = new File(BASE_PASH + File.separator + "strfile_target.txt");
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(sourceFile));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(targetFile));
+        String line;
+        while (null != (line = bufferedReader.readLine())) {
+            if (line.trim().isEmpty()) {
+                continue;
+            }
+            bufferedWriter.write(line);
+            bufferedWriter.newLine();
         }
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
 
-        fileInputStream.close();
-        fileOutputStream.close();
+    private static void copyTest2() throws IOException {
+        File sourceFile = new File(BASE_PASH + File.separator + "picture.jpg");
+        File targetFile = new File(BASE_PASH + File.separator + "picture_copy.jpg");
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(sourceFile));
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(targetFile));
+        byte[] buffer = new byte[2];
+        while (-1 != bufferedInputStream.read(buffer)) {
+            bufferedOutputStream.write(buffer);
+            bufferedOutputStream.flush();
+        }
+        bufferedInputStream.close();
+        bufferedOutputStream.close();
     }
 }
