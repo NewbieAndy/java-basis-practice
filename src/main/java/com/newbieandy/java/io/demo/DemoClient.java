@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
 public class DemoClient {
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
-            try (Socket client = new Socket(InetAddress.getLocalHost(), 9991)) {
+            try (Socket client = new Socket(InetAddress.getLocalHost(), 8888)) {
                 InputStream inputStream = client.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 bufferedReader.lines().forEach(System.out::println);
