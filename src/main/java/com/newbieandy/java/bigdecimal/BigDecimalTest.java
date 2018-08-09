@@ -8,6 +8,10 @@ import java.math.RoundingMode;
  */
 public class BigDecimalTest {
     public static void main(String[] args) {
+        String str = "203";
+        String[] split = str.split(",");
+        System.out.println(split[0]);
+        System.out.println(split[1]);
     }
 
     /**

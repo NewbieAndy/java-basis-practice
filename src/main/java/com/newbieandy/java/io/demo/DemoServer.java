@@ -12,10 +12,12 @@ public class DemoServer implements Runnable {
     @Override
     public void run() {
         try {
-            serverSocket = new ServerSocket(9991);
+            serverSocket = new ServerSocket(8888);
             ExecutorService threadPool = Executors.newFixedThreadPool(5);
             while (true) {
+                System.out.println("before accept");
                 Socket socket = serverSocket.accept();
+                System.out.println("after accept");
                 RequestHandler requestHandler = new RequestHandler(socket);
                 threadPool.execute(requestHandler);
             }
