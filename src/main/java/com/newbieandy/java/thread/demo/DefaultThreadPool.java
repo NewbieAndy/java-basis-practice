@@ -38,7 +38,7 @@ public class DefaultThreadPool<Job extends Runnable> implements ThreadPool<Job> 
         if (null != job) {
             synchronized (jobs) {
                 jobs.addLast(job);
-                jobs.notifyAll();
+                jobs.notify();
             }
         }
     }
