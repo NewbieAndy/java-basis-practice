@@ -12,10 +12,9 @@ public class OomTest {
 
     public static void main(String[] args) {
         List<OOMBean> list = new ArrayList<>();
-        System.out.println();
-    }
-    public static String getString(){
-        return "";
+        while (true) {
+            list.add(new OOMBean());
+        }
     }
 
     static class OOMBean {
