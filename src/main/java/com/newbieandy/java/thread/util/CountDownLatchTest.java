@@ -3,7 +3,6 @@ package com.newbieandy.java.thread.util;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class CountDownLatchTest {
     static CountDownLatch count;
@@ -20,8 +19,9 @@ public class CountDownLatchTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(1);
+            System.out.println("1before");
             count.countDown();
+            System.out.println("1after");
         });
         executorService.execute(() -> {
             try {
@@ -29,8 +29,9 @@ public class CountDownLatchTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(2);
+            System.out.println("2before");
             count.countDown();
+            System.out.println("2after");
         });
         executorService.execute(() -> {
             try {
@@ -38,8 +39,9 @@ public class CountDownLatchTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(3);
+            System.out.println("3before");
             count.countDown();
+            System.out.println("3after");
         });
         executorService.execute(() -> {
             try {
@@ -47,10 +49,11 @@ public class CountDownLatchTest {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(4);
+            System.out.println("4before");
             count.countDown();
+            System.out.println("4after");
         });
-        count.await(100, TimeUnit.SECONDS);
+        count.await();
         System.out.println(5);
         executorService.shutdown();
     }
