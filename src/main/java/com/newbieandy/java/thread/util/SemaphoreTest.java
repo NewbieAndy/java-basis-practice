@@ -11,10 +11,11 @@ public class SemaphoreTest {
 
     public static void main(String[] args) {
         for (int i = 0; i < THREAD_COUNT; i++) {
+            int finalI = i;
             threadPool.execute(() -> {
                 try {
                     s.acquire();
-                    System.out.println("save data");
+                    System.out.println("save data" + finalI);
                     s.release();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
