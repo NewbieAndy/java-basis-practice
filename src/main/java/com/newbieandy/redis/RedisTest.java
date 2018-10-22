@@ -51,6 +51,7 @@ public class RedisTest {
         System.out.println(jedis.get("byteString"));
         System.out.println("bitCount:" + jedis.bitcount("byteString"));
         System.out.println("bitCount:" + jedis.bitcount("byteString", 0, -1));
+        System.out.println("bit null test:" + jedis.bitcount("byteString1"));
         System.out.println("=================bitmap test==============");
         jedis.setbit("bitMap", 536870911, false);
         System.out.println(jedis.bitcount("bitMap"));
