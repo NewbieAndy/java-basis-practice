@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Objects;
+
 /**
  * Created by mchao on 2017/12/1.
  */
@@ -19,17 +21,13 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-
-        if (age != user.age) return false;
-        return name != null ? name.equals(user.name) : user.name == null;
+        return age == user.age;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + age;
-        return result;
+
+        return Objects.hash(age);
     }
 }
