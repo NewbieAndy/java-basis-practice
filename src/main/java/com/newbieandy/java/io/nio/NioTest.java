@@ -13,25 +13,15 @@ import java.nio.channels.FileChannel;
 public class NioTest {
     public static void main(String[] args) throws IOException {
 //        StringBuffer buffer = new StringBuffer();
-
         String path = System.getProperty("user.dir") + "\\src\\main\\resources\\trywithresource\\";
         String sourcePath = path + "niotest.txt";
         String goalPath = path + "niotest1.txt";
+        FileChannel fileChannel = new FileInputStream(new File(sourcePath)).getChannel();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        int read = fileChannel.read(byteBuffer);
 
-        FileInputStream fileInputStream = new FileInputStream(new File(sourcePath));
-        FileOutputStream fileOutputStream = new FileOutputStream(new File(goalPath));
-        FileChannel inChannel = fileInputStream.getChannel();
-        FileChannel outChannel = fileOutputStream.getChannel();
-        ByteBuffer buffer = ByteBuffer.allocate(1024);
-        while (true) {
-            buffer.clear();
-            int read = inChannel.read(buffer);
-            if (read == -1) {
-                break;
-            }
-            buffer.flip();
-            outChannel.write(buffer);
-        }
 
+        FileChannel goalFileChannel = new FileOutputStream(new File(goalPath)).getChannel();
+        ByteBuffer byteBuffer1 = ByteBuffer.allocate(1024);
     }
 }
