@@ -4,19 +4,29 @@ import java.util.*;
 
 public class StringTest {
     public static void main(String[] args) {
-//        String str1 = new String("a") + new String("b");
-//        String str2 = "ab";
-//        String intern = str1.intern();
-//        System.out.println(str2 == intern);
-//        System.out.println(str1 == str2);
+
+
+        String str1 = new String("a") + new String("b");
+        String str2 = "ab";
+        String intern = str1.intern();
+        System.out.println(str2 == intern);
+        System.out.println(str1 == str2);
+        System.out.println("==========");
+        String a5 = new String("A") + new String("A");
+        System.out.println(a5 == a5.intern());
+        System.out.println(a5 == "AA");
+
+        String a6 = new String("B") + new String("B");
+        System.out.println(a6 == "BB");
+        System.out.println("BB" == a6.intern());
 //        System.out.println(str1.equals(str2));
 //        System.out.println(convertStr("hello ll"));
 //        System.out.println(countChar("hello ll"));
-        String head = "99650106";
-        long strat = System.currentTimeMillis();
-        Set<String> set = generateRandomNumber(head, 200000);
-        System.out.println(System.currentTimeMillis() - strat);
-        System.out.println(set.size());
+//        String head = "99650106";
+//        long strat = System.currentTimeMillis();
+//        Set<String> set = generateRandomNumber(head, 200000);
+//        System.out.println(System.currentTimeMillis() - strat);
+//        System.out.println(set.size());
         //9 96 50 10 64 46 61 10 16 82
         //9 89 62 21 37 22 02 02 46 74
     }

@@ -31,16 +31,18 @@ public class CountDownLatchTest {
             }
             System.out.println("2before");
             count.countDown();
+            System.out.println(count.getCount());
             System.out.println("2after");
         });
         executorService.execute(() -> {
             try {
-                Thread.sleep(3200);
+                Thread.sleep(1200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             System.out.println("3before");
             count.countDown();
+            System.out.println(count.getCount());
             System.out.println("3after");
         });
         executorService.execute(() -> {
@@ -51,6 +53,7 @@ public class CountDownLatchTest {
             }
             System.out.println("4before");
             count.countDown();
+            System.out.println(count.getCount());
             System.out.println("4after");
         });
         count.await();

@@ -21,8 +21,12 @@ public class ListTest {
 //        listSliceTest();
 //        listRemoveallTest();
 //        arraysAsListTest();
-        removeListTest();
+//        removeListTest();
 
+//        String s = "123,123,123";
+        String s = "";
+        String[] split = s.split(",");
+        System.out.println(split);
     }
 
     private static void listSliceTest() {

@@ -20,6 +20,15 @@ public class LocalDateTimeTest {
         //DateTimeParseException
 //        System.out.println(parse);
         week();
+        String fileName = "卡面订单-"
+                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss - n"))
+                + ".xlsx";
+        System.out.println(fileName);
+
+        String fileName1 = "卡面订单-"
+                + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss - n"))
+                + ".xlsx";
+        System.out.println(fileName1);
     }
 
     private static void week() {
