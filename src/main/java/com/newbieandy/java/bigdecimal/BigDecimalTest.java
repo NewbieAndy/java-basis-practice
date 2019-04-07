@@ -9,6 +9,8 @@ import java.time.LocalTime;
  */
 public class BigDecimalTest {
     public static void main(String[] args) {
+        int i = 0, j = 0;
+        int[] ints = {i, j};
 //        String str = "203";
 //        String[] split = str.split(",");
 //        System.out.println(split[0]);
