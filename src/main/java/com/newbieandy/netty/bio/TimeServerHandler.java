@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TimeServerHandler implements Runnable {
     private Socket socket;
@@ -18,7 +19,6 @@ public class TimeServerHandler implements Runnable {
     public void run() {
         BufferedReader in = null;
         PrintWriter out = null;
-
         try {
             in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             out = new PrintWriter(this.socket.getOutputStream(), true);
@@ -29,31 +29,31 @@ public class TimeServerHandler implements Runnable {
                 if (null == body) {
                     break;
                 }
-                System.out.println("The Time Server receive order:" + body);
-                currentTime = "qto".equals(body) ? LocalDateTime.now().toString() : "bad order";
+                System.out.println("This time server receive order: " + body);
+                currentTime = "query time order".equalsIgnoreCase(body) ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")) : "BAD ORDER";
                 out.println(currentTime);
             }
         } catch (IOException e) {
-            e.printStackTrace();
         } finally {
-            if (null != in) {
+            if (in != null) {
                 try {
                     in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
             }
-            if (null != out) {
+            if (out != null) {
                 out.close();
+                out = null;
             }
-            if (null != this.socket) {
+            if (null != socket) {
                 try {
-                    this.socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    socket.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
+                socket = null;
             }
         }
-
     }
 }
