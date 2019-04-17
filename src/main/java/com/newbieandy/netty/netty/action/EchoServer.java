@@ -17,8 +17,8 @@ public class EchoServer {
         this.port = port;
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws InterruptedException {
+        new EchoServer(8080).start();
     }
 
     //启动方法

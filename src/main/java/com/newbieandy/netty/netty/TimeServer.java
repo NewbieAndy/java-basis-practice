@@ -8,9 +8,11 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
 public class TimeServer {
-    public void bind(int port) {
+    public void bind(int port) throws InterruptedException {
         //配置服务端的NIO线程组
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -22,10 +24,9 @@ public class TimeServer {
                     .childHandler(new ChildChannelHandler());
             //绑定端口，同步等待成功
             ChannelFuture f = b.bind(port).sync();
+//            f.addListener(future -> System.out.println("处理完成..." + LocalDateTime.now().toString()));
             //等待服务监听端口关闭
             f.channel().closeFuture().sync();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } finally {
             //优雅退出，释放线程池资源
             bossGroup.shutdownGracefully();
@@ -35,12 +36,15 @@ public class TimeServer {
 
     private class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
         @Override
-        protected void initChannel(SocketChannel socketChannel) throws Exception {
+        protected void initChannel(SocketChannel socketChannel) {
+            //添加解码
+            socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));
+            socketChannel.pipeline().addLast(new StringDecoder());
             socketChannel.pipeline().addLast(new TimeServerHandler());
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         int port = 8080;
         new TimeServer().bind(port);
     }
