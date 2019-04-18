@@ -191,7 +191,7 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
     }
 
     private void sendRedirect(ChannelHandlerContext ctx, String s) {
-        //todo
+        //todo page 176
     }
 
     private void sendError(ChannelHandlerContext ctx, HttpResponseStatus badRequest) {
