@@ -29,7 +29,9 @@ public class EchoServer {
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 100)
+                    //父类的handler,为每个新接入的客户端都创建一个新handler
                     .handler(new LoggingHandler(LogLevel.INFO))
+                    //子类的handler, NioServerSocketChannel使用的,所有连接该监听端口的客户端都执行
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
