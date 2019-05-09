@@ -14,8 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.regex.Pattern;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
+import static io.netty.handler.codec.http.HttpHeaders.Names.*;
 import static io.netty.handler.codec.http.HttpHeaders.isKeepAlive;
 import static io.netty.handler.codec.http.HttpHeaders.setContentLength;
 
@@ -79,7 +78,7 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
         long length = randomAccessFile.length();
         HttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
         setContentLength(response, length);
-        setcontentTypeHeader(response, file);
+        setContentTypeHeader(response, file);
         if (isKeepAlive(req)) {
             response.headers().set(CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
         }
@@ -136,7 +135,7 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
             return null;
         }
 
-        uri = url.replace('/', File.separatorChar);
+        uri = uri.replace('/', File.separatorChar);
         if (uri.contains(File.separator + '.')
                 || uri.contains('.' + File.separator)
                 || uri.startsWith(".")
@@ -190,13 +189,21 @@ public class HttpFileServerHandler extends SimpleChannelInboundHandler<FullHttpR
                 .addListener(ChannelFutureListener.CLOSE);
     }
 
-    private void sendRedirect(ChannelHandlerContext ctx, String s) {
-        //todo page 176
+    private void sendRedirect(ChannelHandlerContext ctx, String newUri) {
+        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.FOUND);
+        response.headers().set(LOCATION, newUri);
+        ctx.writeAndFlush(response)
+                .addListener(ChannelFutureListener.CLOSE);
     }
 
-    private void sendError(ChannelHandlerContext ctx, HttpResponseStatus badRequest) {
+    private void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {
+        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, status, Unpooled.copiedBuffer("Failure:" + status.toString() + "\r\n", CharsetUtil.UTF_8));
+        response.headers().set(CONTENT_TYPE, "text/plain;charset=UTF-8");
+        ctx.writeAndFlush(response)
+                .addListener(ChannelFutureListener.CLOSE);
     }
 
-    private void setcontentTypeHeader(HttpResponse response, File file) {
+    private void setContentTypeHeader(HttpResponse response, File file) {
+        response.headers().set(CONTENT_TYPE, "text/plain;charset=UTF-8");
     }
 }
